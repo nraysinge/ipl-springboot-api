@@ -1072,9 +1072,26 @@ async function deletePlayer(id) {
 async function deleteTeam(id) {
   if (!confirm('Delete this team and all its players?')) return;
   try {
-    await fetch(`${API}/teams/${id}`,{method:'DELETE'});
-    toast('Team deleted','success'); loadTeams();
-  } catch(e) { toast('Error deleting','error'); }
+    const res = await fetch(`${API}/teams/${id}`, {
+      method: 'DELETE'
+    });
+
+    console.log("DELETE RESPONSE:", res.status);
+    console.log("DELETE URL:", `${API}/teams/${id}`);
+
+    const data = await res.text();
+    console.log("DELETE DATA:", data);
+
+    toast('Team deleted', 'success');
+    loadTeams();
+  } catch(e) {
+    console.error("DELETE ERROR:", e);
+    toast('Error deleting', 'error');
+  }
+  // try {
+  //   await fetch(`${API}/teams/${id}`,{method:'DELETE'});
+  //   toast('Team deleted','success'); loadTeams();
+  // } catch(e) { toast('Error deleting','error'); }
 }
 
 // ── Summary ──
